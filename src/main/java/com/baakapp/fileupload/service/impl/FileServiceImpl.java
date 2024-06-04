@@ -59,7 +59,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void deleteFileByName(String fileName) {
-        fileRepository.deleteByName(fileName);
+        FileData fileData = fileRepository
+                .findByName(fileName)
+                .orElseThrow(() -> new FileUploadException("File not found"));
+
+        fileRepository.delete(fileData);
     }
 
     @Override
