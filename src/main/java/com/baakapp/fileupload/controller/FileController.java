@@ -32,7 +32,7 @@ public class FileController {
                 .body(fileService.upload(multipartFile));
     }
 
-    @GetMapping(value="/download", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @GetMapping(value="download", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Resource> download(@RequestBody FileDownloadRequest fileDownloadRequest) {
         FileData file = fileService.getFileByName(fileDownloadRequest.fileName());
 
@@ -42,7 +42,7 @@ public class FileController {
                 .body(new ByteArrayResource(file.getData()));
     }
 
-    @GetMapping(value="list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FileUploadResponse>> getFiles() {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -57,7 +57,7 @@ public class FileController {
                 .body(new FileResponse("File deleted successfully"));
     }
 
-    @PutMapping("/update")
+    @PutMapping()
     public ResponseEntity<FileResponse> updateUserByName(@RequestBody FileUpdateRequest fileUpdateRequest) {
         fileService.updateByName(fileUpdateRequest.getCurrentName(), fileUpdateRequest.getNewName());
         return ResponseEntity
